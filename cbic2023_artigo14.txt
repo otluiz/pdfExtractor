@@ -1,0 +1,542 @@
+Unleashing the Potential of FSS: A New Version
+for Global Optimization in Function Problems
+Othon Oliveira
+Graduate Program in Industrial Engineering
+Federal University of Technology - Paran ´a
+Ponta Grossa, Brazil
+ooliveira@alunos.utfpr.edu.brFernando Buarque
+Graduate Program on Computing Engineering
+University of Pernambuco
+Recife, Brazil
+fbln@ecomp.poli.br
+Hugo Valadares Siqueira
+Graduate Program in Industrial Engineering
+Federal University of Technology - Paran ´a
+Ponta Grossa, Brazil
+hugosiqueira@utfpr.edu.br
+Abstract —The Fish School Search (FSS) algorithm is a nature-
+inspired optimization technique based on the behavior of fish
+schools. In this work, we present a new version of the FSS
+that incorporates an improved calculation of school dispersion.
+Instead of using the barycenter, a maximum constant radius
+is employed. The enhanced radius definition allows for a more
+diverse search space exploration, promoting a balance between
+exploration and exploitation. By considering a fixed maximum
+radius, the algorithm ensures that agents present a wider range
+of movement, which can lead to better global search capabilities.
+Through experiments on benchmark problems, we evaluate the
+performance of the proposed version. The results show that the
+improved radius calculation contributes to enhanced exploration
+and convergence properties, enabling the algorithm to find high-
+quality solutions efficiently. A numerical comparison between this
+version and the PSO proved the validity of the proposal. This
+new ideia can expand the applicability of the FSS to various
+optimization problems.
+Index Terms —Fish School Search, Optimization Algorithm,
+Enhanced Radius Calculation, Exploration, Exploitation.
+I. I NTRODUCTION
+Evolutionary algorithms (EAs) and swarm-based algorithms
+are popular metaheuristics that draw inspiration from biolog-
+ical systems to solve optimization problems [1]. EAs mimic
+the process of natural selection and evolution, while swarm-
+based simulate the collective behavior of swarms or groups
+of animals. These algorithms have been widely applied to
+various optimization tasks and demonstrated their effectiveness
+in finding high-quality solutions [2].
+The FSS algorithm has had several versions throughout
+its history of success. The first version of the algorithm had
+three main operators, feeding, swimming, and breeding. Some
+have been adapted to solve problems where they have been
+challenged [3].
+The FSS algorithm exhibits several advantageous features.
+Firstly, it provides a balance between exploration and ex-
+ploitation by enabling fish to explore promising regions of
+the search space while exploiting the information exchanged
+through social interaction. This ability to adaptively exploreand exploit the solution space contributes to its robustness in
+finding diverse and high-quality solutions [4].
+Furthermore, the FSS algorithm demonstrates good scal-
+ability, allowing it to handle optimization problems with
+large solution spaces and a high number of dimensions. Its
+simplicity and ease of implementation make it accessible to
+researchers and practitioners, while its flexibility allows for
+customization and adaptation to different problem domains [4].
+In this paper, we present a modified version of the FSS
+regarding the definition of the radius of the fish school. Unlike
+previous approaches that used the barycenter calculation, the
+FSS algorithm uses a fixed radius. This modification brings
+an advantage in the speed of the algorithm’s responses. By
+defining a fixed radius, the algorithm reduces the computa-
+tional complexity associated with calculating the barycenter
+and provides faster convergence to optimal solutions [3], [5].
+We also provide a brief comprehensive overview of the
+FSS algorithm and its potential applications. We explore its
+key components, including the update mechanisms for fish
+positions, velocities, and weights. We also analyze the impact
+of different parameters on the algorithm’s performance and
+provide guidelines for parameter tuning [5].
+To evaluate the effectiveness of the proposal, we conduct ex-
+tensive experiments on a set of benchmark functions, compar-
+ing its performance against other state-of-the-art optimization
+techniques, the PSO [1], [6]–[11]. Through these experiments,
+we aim to demonstrate the algorithm’s strengths, weaknesses,
+and areas of applicability.
+Overall, the new FSS represents a promising avenue for
+tackling optimization problems, offering a unique perspective
+and leveraging the wisdom of collective behavior observed
+in fish schools. The algorithm presents a valuable addition to
+the toolbox of optimization practitioners and researchers. Its
+adaptive exploration and exploitation capabilities, along with
+the advantage brought by the fixed radius calculation, make it
+a compelling choice for a wide range of optimization tasks.
+The rest of this study is organized as follows: Section IIpresents the new FSS approach; Section III briefly presents the
+traditional PSO algorithm; Section IV shows the main results
+and a discussion; Section V has the conclusions and future
+perspectives.
+II. N EWFSS APPROACH
+In this section, we describe how to incorporate an enhanced
+radius estimation method into the FSS algorithm. Instead
+of using a dynamic radius based on the maximum distance
+between individuals in the school as in the previous versions
+[12], we propose a safe number of agents that produces a
+satisfactory result. The goal is to simplify the calls to the
+fitness function as much as possible. Therefore, the calculation
+of the total radius of the swarm was simplified instead of
+calculating the barycenter. In this case, we maintain a fixed
+radius defined by the variable SCHOOL RADIUS .
+Maintaining a fixed radius allows us to control the social
+interaction of the fish and limit their influence on the nearest
+neighbors. This process regulates the intensity of collaboration
+and competition among the swarm, which affects the dynamics
+and can lead to a more efficient search for high-quality
+solutions.
+The new FSS employs a set of equations to update the
+positions, velocities, weights, and swarm radius of the fish in
+its quest for optimal solutions. Each fish’s position is updated
+based on its current velocity. The equation for updating the
+fish’s position is given by Equation 2:
+newFish.position [d] =fish.position [d] +fish.velocity [d]
+(1)
+where drepresents the dimension of the fish’s position (coor-
+dinate).
+The velocity of each fish is updated by adding random
+perturbations. The equation for updating the fish’s velocity is
+given by:
+newFish.velocity [d] =fish.velocity [d] +randomDouble (
+−COEFF INFLUENCE, COEFF INFLUENCE )
+(2)
+The most successful way among bioinspired algorithms is
+the physics-based motion equation, in which the new position
+of the particle is influenced by the previous position and a
+small step and/or by adding velocity to this equation, as in
+Equation 3 [3], [13]:
+xt+1=xt−[+]δstep (3)
+In this equation the delta is the small step that moves the
+particle to a minimum point (if the problem is minimizing).
+To find the global minimum, the particles, when close to the
+solution, should reduce their speed, reducing the size of the
+step in the equation (the delta) to convergence.
+In Algorithm 1 the new proposal is summarized.Algorithm 1: Modified Fish School Search (FSS)
+version
+1Initialize fish school with random positions, velocities,
+weights, and fitness values
+2foreach iteration do
+3 Update the fish positions and velocities: foreach
+fish in the school do
+4 Update the fish’s position based on its velocity
+Update the fish’s velocity with random Adjust
+the fish’s velocity based on social
+5 end
+6 Update the fish’s weight based on feeding: for
+each fish in the school do
+7 Calculate the change in weight Adjust the
+fish’s weight accordingly fitness
+8 end
+9 Calculate the fitness of each fish in the school
+Store the best fish as the current best solution
+10end
+11return the best solution found
+III. P ARTICLE SWARM OPTIMIZATION
+The PSO algorithm has some similar equations, including
+the displacement of the particles. However this algorithm
+excels in simplicity and speed to the detriment of the quality
+of the responses.
+Algorithm 2: Particle Swarm Optimization (PSO)
+1:Initialize a population of particles with random positions
+and velocities
+2:Initialize the best particle positions− →Piand the global
+best position− →Pg
+while Termination condition not met do
+end
+Each particle i
+3:Update the velocity of particle i
+4:Update the position of particle i
+5:Evaluate the fitness of particle i
+ifFitness of particle iis better than its personal
+best then
+6:
+end
+Update the personal best position− →Pi
+7:
+ifFitness of particle iis better than the global best
+fitness then
+8:
+end
+Update the global best position− →Pg
+9:
+10:
+11:IV. R ESULTS
+Benchmarking functions generally serve to test whether the
+results are promising.
+A. Rosenbrock function
+For example for the Rosenbrock function which has its
+minimum at (1, 1, ..., 1), for any number of dimensions. Figure
+1 shows a 2-dimensional representation of this function.
+In our experiments, the new FSS converged to the global
+minimum points. The results are compared with PSO with the
+same number of agents and dimensions. The new FSS (and
+PSO) found the points as shown in Table I.
+TABLE I: Best position 2D dimension
+FSS P(0) FSS P(1) PSO G(1) PSO G(2)
+0.006652 1.06939 -1.9596 -0.959596
+0.0116182 0.971825 -1.91919 -0.919192
+0.00389053 1.03783 -1.87879 -0.878788
+0.00389053 1.03783 -1.83838 -0.838384
+0.00845029 0.92139 -1.79798 -0.79798
+0.00845029 0.92139 -1.75758 -0.757576
+0.0103991 0.914343 -1.71717 -0.717172
+0.0103991 0.914343 -1.67677 -0.676768
+0.00332927 1.03705 -1.63636 -0.636364
+0.00332927 1.03705 -1.59596 -0.59596
+0.00944386 1.01752 -1.55556 -0.555556
+0.0161138 0.999681 -1.51515 -0.515152
+0.00336446 1.02148 -1.47475 -0.474747
+0.00082394 1.00898 -1.43434 -0.434343
+0.00082394 1.00898 -1.39394 -0.393939
+0.00197534 1.03573 -1.35354 -0.353535
+0.00133041 1.00965 -1.31313 -0.313131
+0.00109278 1.03166 -1.27273 -0.272727
+0.00109278 1.03166 -1.23232 -0.232323
+0.00109278 1.03166 -1.19192 -0.191919
+0.00789441 1.04282 -1.15152 -0.151515
+0.00789441 1.04282 -1.11111 -0.111111
+0.00639766 0.927431 -1.07071 -0.0707071
+0.00488338 1.04548 -1.0303 -0.030303
+0.00488338 1.04548 -0.989899 0.010101
+0.00474552 0.978401 -0.949495 0.0505051
+0.00474552 0.978401 -0.909091 0.0909091
+0.00474552 0.978401 -0.868687 0.131313
+0.0103991 1.04282 -0.828283 0.171717
+0.00389053 1.03783 -0.787879 0.212121
+It is an interesting achievement that the FSS algorithm has
+outperformed the PSO and reached the global minimum of
+the Rosenbrock function. This can be attributed to the specific
+features of the FSS algorithm, which include fish school
+behavior, adaptive fish weight updating, and local search for
+better solutions.
+The fact that fish incorporate environmental information
+when they gain weight makes them particles with moreinformation than PSO particles. This fact is explained by the
+results found by the FSS.
+In Figures 2 and 3 the darker dots show that the ”global
+optimal” solution was better positioned by the particles.
+(a) Rosenbrock points
+(b) Rosenbrock points
+Fig. 3: Points generated by the FSS, [14]
+B. new FSS X original PSO
+In this section we present the calculation procedure to
+determine the difference in relation to the global minimum
+of the Rosenbrock 2d function, points (1,1), and calculation
+of the standard deviation these differences, for both the new
+FSS and the original PSO.
+Boxplot graphics offer a concise summary of key statistics,
+facilitate comparison between groups, identify outliers, visu-(a) Rosenbrock
+ (b) Rosenbrock2d
+Fig. 1: a) Rosenbrock in 2 dimensions and b) superior view, [14]
+(a) Rosenbrock points
+ (b) Rosenbrock points
+Fig. 2: Points generated by the FSS, [14]
+alize skewness, and are space-efficient. They provide an easy-
+to-interpret visual representation of data distributions, making
+them valuable in exploratory data analysis and statistical
+reporting. Figure presents the boxplot regarding the points
+found by the algorithms.
+As we can see the data of the new FSS are concentrated
+around a point, in the case of the zero point and the point
+1, despite the global minimum being the point (1.1), the
+interquartile distance of the points generated by the new FSS
+is minimum. To the point of not perceiving the quartiles, this
+indicates that the agents were concentrated very close to the
+global minimum. Otherwise, the PSO has a greater dispersion,
+which may indicate that the particles did not converge, they
+were ”bouncing” from one side to another.To calculate the absolute distance relation to the global
+minimum, the following calculation was made:
+•Step 1: Calculate the difference with respect to the
+point (1,1). For each pair of values bestPosition[0] and
+bestPosition[1] from FSS, subtract 1 from bestPosition[0]
+and 1 from bestPosition[1] to obtain the difference with
+respect to the point (1,1). This difference represents
+the horizontal and vertical displacement from the global
+minimum of the Rosenbrock function;
+•Step 2: Create a new column with the calculated dif-
+ferences. A new column named ”Difference” was added
+to the FSS table, where each value corresponds to the
+difference calculated in Step 1;
+•Step 3: Calculate the standard deviation of the differ-Fig. 4: Boxplot Table 1 reference [15]
+ences. We used the formula for standard deviation to
+calculate the variability of the difference values with
+respect to the point (1,1). The formula for standard
+deviation is as Equation 4:
+SD=vuut1
+N−1NX
+k=1(xi−¯x)2 (4)
+where Nis the number of values, xiis each individual
+difference value, and ¯xis the mean of the differences;
+•Step 4: Calculate the standard deviation of the differ-
+ences. We applied the standard deviation formula to
+the calculated difference values from Step 1 to obtain
+the standard deviation of the differences with respect
+to the point (1,1). This value represents the dispersion
+of the displacements from the global minimum of the
+Rosenbrock function.
+As we can see, the standard deviation is a formula that
+takes into account the deviation, here called the absolute
+distance, in relation to the mean. Therefore, the calculations
+were performed based on these steps to obtain the difference
+concerning the point (1,1) and the standard deviation of the
+differences. The standard deviation of these differences for
+FSS was 0.021297. , while for PSO was 0.487217 .
+The Mean square error is the relative distance to a given
+point, in our case to Point P(1,1) which is the global minimum
+of the Rosenbrock function, as in Equation 5.
+MSE =1
+N−1NX
+k=1(xi−x)2(5)
+If we analyze the two formulas well, we can see that
+changing the mean variable (x-bar) by the point P(1,1), and
+extracting the square root of the Deviation, we find the Mean
+Square Error or MSE (Mean Square Error) [16].The reference value is a point in the plane. If we used the
+reference value as the mean of the sample (of the points), we
+would calculate the standard deviation and, thus, the Accuracy
+of the algorithm. However, as we are considering the point
+P(1,1) we are calculating the Accuracy, and comparing it
+with the PSO considered standard for optimization. Figure 5
+explains this idea.
+Fig. 5: Accuracy X Precision [16]
+As one can see in Table II, the new FSS is much more
+accurate than the PSO, as the numbers show that there is an
+order of magnitude (the smallest) between the new FSS and
+the PSO.
+TABLE II: FSS x PSO distances
+FSS Distance p(1,1) PSO Distante p(1,1)
+0.093348 2.9596
+0.028174 2.91919
+0.03617 2.87879
+0.03617 2.83838
+0.07861 2.79798
+0.07861 2.75758
+0.085657 2.71717
+0.085657 2.67677
+0.036953 2.63636
+0.036953 2.59596
+0.017441 2.55556
+0.015209 2.51515
+0.021515 2.47475
+0.008020 2.43434
+0.00802 2.39394
+0.035730 2.35354
+0.009650 2.31313
+0.03166 2.27273
+0.00802 2.23232
+0.03166 2.19192
+0.04282 2.15152
+0.04282 2.11111
+0.072569 2.07071
+0.04548 2.0303
+0.04548 1.9899
+0.021599 1.9495
+0.021599 1.90909
+0.021599 1.86869
+0.04282 1.82828
+0.03617 1.78788We can assess 6 the accuracy of the new FSS, and the
+quality of the results can be observed by examining the
+boxplot regarding the results found in Table II. The new FSS
+successfully converged to the global minimum point at P(0,0)
+with precision and accuracy.
+Fig. 6: Boxplot Table II [15]
+The following MSEs were found:
+•P(0) FSS: 0.9888
+•P(1) FSS: 0.005977
+•G(1) PSO: 169.03893
+•G(2) PSO: 56.6146
+The MSE for P(0) is the distance from an FSS algorithm
+point ’bestPosition[0]’ to the point P(1,1) in that same dimen-
+sion. Similarly ’bestPosition[1]’ is the relative distance from
+this best point, found by the new FSS to the point P(1,1) of
+this other dimension. The values found demonstrate the high
+accuracy of the proposal in the two tested dimensions. The
+PSO algorithm lost in all 30 tests when compared to the new
+FSS.
+C. Rastrigin function
+The Rastrigin function is a popular benchmark function
+used to evaluate the performance of optimization algorithms.
+It is commonly employed to assess the ability of optimization
+techniques to find the global minimum in a multi-dimensional
+search space. The Rastrigin function is characterized by its
+multimodal and highly rugged landscape. It is a non-convex
+function with numerous local minima, making it a challenging
+problem for optimization algorithms. The function is defined
+as in Equation 6:
+f(x) =An+nX
+i=1 
+x2
+i−Acos(2 πxi)
+(6)
+In this equation, nrepresents the number of dimensions of
+the search space, xidenotes the i-th component of the inputvector xi, and Ais a parameter that controls the amplitude of
+the function.
+The Rastrigin function poses significant challenges for op-
+timization algorithms due to its ruggedness and the presence
+of multiple local minima. It requires exploration of the search
+space to locate the global minimum accurately. The function’s
+landscape consists of many narrow, deep valleys, making it
+difficult for algorithms to escape local optima and converge to
+the global minimum [17].
+Researchers and practitioners use the Rastrigin function to
+compare different optimization algorithms, assess their con-
+vergence properties, and evaluate their performance in terms
+of accuracy, convergence speed, and robustness. By analyzing
+an algorithm’s performance on the Rastrigin function, valuable
+insights can be gained regarding its strengths and weaknesses,
+guiding further algorithm development and improvement. Fig-
+ure 7 presents a visual the plot of the 2D perspective of the
+aforementioned function.
+The results found by the new FSS are in Table III.
+TABLE III: FSS points for Rastrigin function
+bestPosition[0]) bestPosition[1]
+7.0001e-09 -5.47686e-06
+4.8632e-09 -1.10703e-06
+4.8632e-09 -1.10703e-06
+1.92512e-08 2.85587e-06
+3.11899e-09 -3.8705e-06
+3.11899e-09 -3.8705e-06
+3.64035e-09 3.6494e-06
+3.64035e-09 3.6494e-06
+2.92399e-08 -1.1206e-07
+2.92399e-08 -1.1206e-07
+1.27653e-09 -2.19052e-06
+5.78027e-10 -1.619e-06
+5.78027e-10 -1.619e-06
+2.00927e-09 -2.68418e-06
+2.00927e-09 -2.68418e-06
+8.30028e-09 4.48382e-06
+8.30028e-09 4.48382e-06
+4.40771e-10 5.12383e-07
+1.23628e-09 -2.21651e-06
+1.23628e-09 -2.21651e-06
+4.87896e-09 -4.04789e-06
+4.87896e-09 -4.04789e-06
+3.55907e-09 -2.05939e-07
+3.55907e-09 -2.05939e-07
+5.65695e-07 3.10031e-05
+3.56539e-09 4.22252e-06
+3.56539e-09 4.22252e-06
+4.72158e-09 -4.37415e-06
+4.72158e-09 -4.37415e-06
+3.43022e-10 -9.73282e-07
+In this case the algorithm found bestPosition[0] and bestPo-
+sition[1] very close to that the zero of the Rastrigin function,(a) Rastrigin
+ (b) Rastrigin2d
+Fig. 7: a) Rastrigin 2 dimensions and b) superior view [12]
+the global optimum point. Once again, the new proposal could
+minize a challenge function.
+This is a significant achievement, as finding the global
+minimum of these functions is challenging due to their com-
+plex nature and multiple local optima. The FSS capability to
+consistently locate the global minimum highlights its efficacy
+and superiority compared to other optimization algorithms,
+such as PSO.
+Applying the new FSS has shown promising results, with
+the algorithm successfully finding the global minimum of both
+functions. Its ability to navigate complex landscapes, coupled
+with its lower standard deviation, positions the FSS algorithm
+as an effective and reliable optimization technique for a wide
+range of applications.
+V. C ONCLUSION
+This paper propose a modification in the standard FSS
+algorithm, including a different way to determine the disper-
+sion of the agents instead of the traditional calculation of the
+barycenter.
+The algorithm was applied to two test functions. For the
+Rosenbrock function, the new FSS algorithm consistently
+converged to the global optimal point. This indicates that the
+proposal is effective in optimizing functions with multiple
+dimensions, as it successfully navigated the complex landscape
+of the function and reached the desired solution.
+Similarly, for the Rastrigin function, the new FSS algorithm
+showcased its ability to find the global minimum. The algo-
+rithm’s exploration and exploitation capabilities allowed it to
+navigate the function’s rugged landscape and converge to the
+optimal solution.
+Furthermore, the new FSS algorithm also demonstrated a
+lower standard deviation compared to the PSO algorithm, in-
+dicating more stable and reliable performance across multiple
+iterations. This further emphasizes the algorithm’s robustness
+and accuracy.
+Future investigations should be developed considering other
+algorithms for comparison, as well real real-word optimization
+tasks.
+REFERENCES
+[1] E. D. P. Puchta, P. Bassetto, L. H. Biuk, M. A. Itaborahy Filho,
+A. Converti, M. d. S. Kaster, and H. V . Siqueira, “Swarm-inspiredalgorithms to optimize a nonlinear gaussian adaptive pid controller,”
+Energies , vol. 14, no. 12, p. 3385, 2021.
+[2] H. Siqueira, M. Macedo, Y . d. S. Tadano, T. A. Alves, S. L. Stevan Jr,
+D. S. Oliveira Jr, M. H. Marinho, P. S. d. M. Neto, J. F. d. Oliveira,
+I. Luna et al. , “Selection of temporal lags for predicting riverflow series
+from hydroelectric plants using variable selection methods,” Energies ,
+vol. 13, no. 16, p. 4236, 2020.
+[3] C. J. Bastos Filho, F. B. de Lima Neto, A. J. Lins, A. I. Nascimento, and
+M. P. Lima, “A novel search algorithm based on fish school behavior,”
+in2008 IEEE international conference on systems, man and cybernetics .
+IEEE, 2008, pp. 2646–2651.
+[4] C. J. Santana, C. J. Bastos-Filho, M. Macedo, and H. Siqueira, “Sbfss:
+Simplified binary fish school search,” in 2019 IEEE Congress on
+Evolutionary Computation (CEC) . IEEE, 2019, pp. 2595–2602.
+[5] M. G. da Motta Macedo, C. J. Bastos-Filho, S. M. Vieira, and J. M.
+Sousa, “Multi-objective binary fish school search,” in Critical Develop-
+ments and Applications of Swarm Intelligence . IGI Global, 2018, pp.
+53–72.
+[6] H. Siqueira, C. Santana, M. Macedo, E. Figueiredo, A. Gokhale, and
+C. Bastos-Filho, “Simplified binary cat swarm optimization,” Integrated
+Computer-Aided Engineering , vol. 28, no. 1, pp. 35–50, 2021.
+[7] J. Kennedy and R. C. Eberhart, “A discrete binary version of the particle
+swarm algorithm,” Proceedings of the IEEE International Conference on
+Systems, Man, and Cybernetics , vol. 5, pp. 4104–4108, 1997.
+[8] M. Clerc and J. Kennedy, “Particle swarm optimization,” IEEE Trans-
+actions on Evolutionary Computation , vol. 6, no. 1, pp. 58–73, 2002.
+[9] R. Poli and A. Vallivaara, “Hybrid particle swarm optimisation for neural
+network training,” Neural Networks , vol. 21, no. 5, pp. 674–688, 2008.
+[10] A. P. Engelbrecht, “Fundamentals of computational swarm intelligence,”
+Wiley , 2005.
+[11] X.-S. Yang, “Nature-inspired metaheuristic algorithms,” Luniver press ,
+2010.
+[12] M. Lacerda, L. Pessoa, F. Lima Neto, T. Ludermir, and H. Kuchen, “A
+systematic literature review on general parameter control for evolution-
+ary and swarm-based algorithms,” Swarm and Evolutionary Computa-
+tion, vol. 60, 09 2020.
+[13] J. Kennedy and R. Eberhart, “Particle swarm optimization,” in Proceed-
+ings of ICNN’95-international conference on neural networks , vol. 4.
+IEEE, 1995, pp. 1942–1948.
+[14] H. H. Rosenbrock, “An Automatic Method for Finding the Greatest or
+Least Value of a Function,” The Computer Journal , vol. 3, no. 3, pp.
+175–184, 01 1960. [Online]. Available: https://doi.org/10.1093/comjnl/
+3.3.175
+[15] E. Mikhail and F. Ackermann, “Observations and least squares university
+press of america,” Lanham, MD , 1976.
+[16] H. B. G. Vieira and R. S. Genro, “Estimativa da acur ´acia posicional
+de documentos cartogr ´aficos na petrobras a partir do erro m ´aximo
+prov´avel inferido do erro m ´edio quadr ´atico e da respectiva vari ˆancia
+propagada,” XVI Simp ´osio Brasileiro de Sensoriamento Remoto-SBSR,
+Foz do Iguac ¸u, PR , 2013.
+[17] A. J. d. C. C. Lins, F. B. L. Neto, and C. J. A. Bastos Filho,
+“Paralelizac ¸ao de algoritmos de busca baseados em cardumes para
+plataformas de processamento gr ´afico,” Learning and Nonlinear Models ,
+vol. 13, pp. 3–20, 2015.
